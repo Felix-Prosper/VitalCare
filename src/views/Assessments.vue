@@ -6,7 +6,7 @@
       </button>
       <h1 class="text-xl font-bold">ศูนย์รวมแบบประเมิน</h1>
     </header>
-
+------
     <main class="p-6 space-y-8 md:max-w-xl md:mx-auto">
       <!-- Overall Score Card -->
       <div class="bg-gradient-to-br from-orange-400 to-primary p-8 rounded-[2.5rem] shadow-xl shadow-primary/30 text-white text-center">
