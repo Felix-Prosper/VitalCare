@@ -1,70 +1,72 @@
 <template>
-  <div class="min-h-screen bg-slate-50 font-sans text-slate-900">
+  <div class="app-shell">
     <!-- Desktop Navigation (Top Navbar) -->
-    <nav v-if="!hideNav" class="hidden md:flex fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-b border-slate-200 px-8 py-4 justify-between items-center z-50">
-      <div class="flex items-center gap-8">
-        <router-link to="/" class="flex items-center gap-2">
-          <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white font-black italic">RT</div>
-          <span class="text-lg font-bold tracking-tight">RunTogether</span>
-        </router-link>
-        
-        <div class="flex items-center gap-6">
-          <router-link to="/" class="text-sm font-bold text-slate-400 hover:text-primary transition-colors" active-class="text-primary">หน้าแรก</router-link>
-          <router-link to="/events" class="text-sm font-bold text-slate-400 hover:text-primary transition-colors" active-class="text-primary">กิจกรรม</router-link>
-          <router-link to="/assessments" class="text-sm font-bold text-slate-400 hover:text-primary transition-colors" active-class="text-primary">แบบประเมิน</router-link>
-          <router-link to="/tasks" class="text-sm font-bold text-slate-400 hover:text-primary transition-colors" active-class="text-primary">ภารกิจ</router-link>
-          <router-link to="/leaderboard" class="text-sm font-bold text-slate-400 hover:text-primary transition-colors" active-class="text-primary">อันดับ</router-link>
-        </div>
-      </div>
-
-      <div class="flex items-center gap-4">
-        <router-link to="/users" class="p-2 text-slate-400 hover:text-primary transition-colors">
-          <UsersIcon :size="20" />
-        </router-link>
-        <router-link to="/profile" class="flex items-center gap-3 pl-4 border-l border-slate-100 group">
-          <div class="text-right">
-            <p class="text-xs font-bold text-slate-800 group-hover:text-primary transition-colors">ณัฐสิทธิ์ ลาสะแน</p>
-            <p class="text-[10px] text-slate-400">Level 42</p>
+    <nav v-if="!hideNav" class="desktop-nav">
+      <div class="nav-container">
+        <div class="nav-left">
+          <router-link to="/" class="brand">
+            <div class="brand-icon">VC</div>
+            <span class="brand-name">VitalCare</span>
+          </router-link>
+          
+          <div class="nav-links">
+            <router-link to="/" class="nav-link" active-class="active">หน้าแรก</router-link>
+            <router-link to="/events" class="nav-link" active-class="active">กิจกรรม</router-link>
+            <router-link to="/assessments" class="nav-link" active-class="active">ประเมิน</router-link>
+            <router-link to="/tasks" class="nav-link" active-class="active">ภารกิจ</router-link>
+            <router-link to="/leaderboard" class="nav-link" active-class="active">อันดับ</router-link>
           </div>
-          <img src="https://picsum.photos/seed/user/100/100" class="w-10 h-10 rounded-full border-2 border-slate-100 group-hover:border-primary transition-colors" referrerPolicy="no-referrer" />
-        </router-link>
+        </div>
+
+        <div class="nav-right">
+          <router-link to="/users" class="icon-action">
+            <UsersIcon :size="20" />
+          </router-link>
+          <router-link to="/profile" class="profile-preview">
+            <div class="profile-info">
+              <p class="user-name">ณัฐสิทธิ์ ลาสะแน</p>
+              <p class="user-stats">4,200 แต้ม</p>
+            </div>
+            <img src="https://picsum.photos/seed/user/100/100" class="profile-avatar" />
+          </router-link>
+        </div>
       </div>
     </nav>
 
     <!-- Main Content -->
-    <div :class="{'md:pt-20': !hideNav}">
+    <div :class="['content-host', { 'with-nav': !hideNav }]">
       <router-view v-slot="{ Component }">
-        <transition name="fade" mode="out-in">
+        <transition name="page-fade" mode="out-in">
           <component :is="Component" />
         </transition>
       </router-view>
     </div>
 
     <!-- Mobile Bottom Navigation -->
-    <nav v-if="!hideNav" class="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-lg border-t border-slate-200 px-4 py-3 flex justify-between items-center z-50">
-      <router-link to="/" class="flex flex-col items-center gap-1 text-slate-400" active-class="text-primary">
+    <nav v-if="!hideNav" class="mobile-nav">
+      <router-link to="/" class="m-nav-item" active-class="active">
         <HomeIcon :size="20" />
-        <span class="text-[10px] font-bold">หน้าแรก</span>
+        <span>หน้าแรก</span>
       </router-link>
-      <router-link to="/events" class="flex flex-col items-center gap-1 text-slate-400" active-class="text-primary">
+      <router-link to="/events" class="m-nav-item" active-class="active">
         <CalendarIcon :size="20" />
-        <span class="text-[10px] font-bold">กิจกรรม</span>
+        <span>กิจกรรม</span>
       </router-link>
-      <router-link to="/assessments" class="flex flex-col items-center gap-1 text-slate-400" active-class="text-primary">
+      <router-link to="/assessments" class="m-nav-item" active-class="active">
         <ClipboardListIcon :size="20" />
-        <span class="text-[10px] font-bold">ประเมิน</span>
+        <span>ประเมิน</span>
       </router-link>
-      <router-link to="/tasks" class="flex flex-col items-center gap-1 text-slate-400" active-class="text-primary">
+      <router-link to="/tasks" class="m-nav-item" active-class="active">
         <CheckCircleIcon :size="20" />
-        <span class="text-[10px] font-bold">ภารกิจ</span>
+        <span>ภารกิจ</span>
       </router-link>
-      <router-link to="/leaderboard" class="flex flex-col items-center gap-1 text-slate-400" active-class="text-primary">
+      <router-link to="/leaderboard" class="m-nav-item" active-class="active">
         <TrophyIcon :size="20" />
-        <span class="text-[10px] font-bold">อันดับ</span>
+        <span>อันดับ</span>
       </router-link>
-      <router-link to="/profile" class="flex flex-col items-center gap-1 text-slate-400" active-class="text-primary">
+      <router-link to="/profile" class="m-nav-item" active-class="active">
         <UserIcon :size="20" />
-        <span class="text-[10px] font-bold">โปรไฟล์</span>
+        <span>โปรไฟล์</span>
       </router-link>
     </nav>
   </div>
@@ -85,44 +87,235 @@ import {
 
 const route = useRoute();
 const hideNav = computed(() => {
-  return route.path.startsWith('/questionnaire') || route.path === '/certificate' || route.path === '/';
+  // Hide global nav on specific pages to avoid overlapping logic
+  return route.path.startsWith('/questionnaire') || 
+         route.path === '/certificate' || 
+         route.path === '/';
 });
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
-
 :root {
   --primary: #F05A23;
-}
-
-.text-primary {
-  color: var(--primary);
-}
-
-.bg-primary {
-  background-color: var(--primary);
-}
-
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
+  --bg-slate-50: #f8fafc;
+  --text-slate-900: #0f172a;
+  --text-slate-400: #94a3b8;
+  --border-slate-200: #e2e8f0;
 }
 
 body {
+  margin: 0;
+  padding: 0;
   font-family: 'Kanit', sans-serif;
+  background-color: var(--bg-slate-50);
+  color: var(--text-slate-900);
+  -webkit-font-smoothing: antialiased;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Desktop Navbar */
+.desktop-nav {
+  display: none; /* Hide by default, show on MD */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4.5rem;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-slate-200);
+  z-index: 1000;
+}
+
+@media (min-width: 768px) {
+  .desktop-nav {
+    display: block;
+  }
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.nav-left, .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  background-color: var(--primary);
+  border-radius: 0.625rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 0.875rem;
+}
+
+.brand-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-slate-400);
+  transition: color 0.2s;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--primary);
+}
+
+.icon-action {
+  color: var(--text-slate-400);
+  transition: color 0.2s;
+  display: flex;
+}
+
+.icon-action:hover {
+  color: var(--primary);
+}
+
+.profile-preview {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-left: 1.5rem;
+  border-left: 1px solid #f1f5f9;
+  text-decoration: none;
+  color: inherit;
+}
+
+.profile-info {
+  text-align: right;
+}
+
+.user-name {
+  margin: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.user-stats {
+  margin: 0;
+  font-size: 0.625rem;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.profile-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Content Host */
+.content-host {
+  flex: 1;
+  transition: padding 0.3s;
+}
+
+@media (min-width: 768px) {
+  .with-nav {
+    padding-top: 4.5rem;
+  }
+}
+
+/* Page Transition */
+.page-fade-enter-active,
+.page-fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+
+.page-fade-enter-from,
+.page-fade-leave-to {
+  opacity: 0;
+}
+
+/* Mobile Nav */
+.mobile-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4.5rem;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border-slate-200);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 0.5rem;
+  z-index: 1000;
+}
+
+@media (min-width: 768px) {
+  .mobile-nav {
+    display: none;
+  }
+}
+
+.m-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  text-decoration: none;
+  color: var(--text-slate-400);
+  transition: all 0.2s;
+  flex: 1;
+}
+
+.m-nav-item span {
+  font-size: 0.625rem;
+  font-weight: 700;
+}
+
+.m-nav-item.active {
+  color: var(--primary);
+  transform: translateY(-2px);
+}
+
+/* Utilities */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 </style>
