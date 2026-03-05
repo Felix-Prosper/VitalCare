@@ -85,7 +85,7 @@ import {
 
 const route = useRoute();
 const hideNav = computed(() => {
-  return route.path.startsWith('/questionnaire') || route.path === '/certificate';
+  return route.path.startsWith('/questionnaire') || route.path === '/certificate' || route.path === '/';
 });
 </script>
 
